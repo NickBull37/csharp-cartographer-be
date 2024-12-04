@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace csharp_cartographer_be._03.Models.Charts
 {
-    public class Chart
+    public class TokenChart
     {
         public string Label { get; set; } = string.Empty;
 

@@ -85,7 +85,7 @@ namespace csharp_cartographer_be._03.Models.Tokens
 
         public List<TokenTag> Tags { get; set; } = [];
 
-        public List<Chart> Charts { get; set; } = [];
+        public List<TokenChart> Charts { get; set; } = [];
 
         // Constructor
         public NavToken(SyntaxToken roslynToken, SemanticModel semanticModel, SyntaxTree syntaxTree, int index)

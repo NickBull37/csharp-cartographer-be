@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="05.Services\NewFolder\**" />
+    <Content Remove="05.Services\NewFolder\**" />
+    <EmbeddedResource Remove="05.Services\NewFolder\**" />
+    <None Remove="05.Services\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.11.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
@@ -29,11 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="07.Controllers\" />
-    <Folder Include="01.Configuration\" />
+    <Folder Include="02.Utilities\Logging\Logs\" />
     <Folder Include="04.DataAccess\" />
-    <Folder Include="05.Services\" />
-    <Folder Include="06.Workflows\" />
   </ItemGroup>
 
 </Project>

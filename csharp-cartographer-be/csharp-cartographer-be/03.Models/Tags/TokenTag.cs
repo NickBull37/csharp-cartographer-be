@@ -2,15 +2,15 @@
 {
     public class TokenTag
     {
-        public required string Label { get; set; }
+        public string Label { get; set; }
 
         public List<string> Facts { get; set; } = [];
 
         public List<string> Insights { get; set; } = [];
 
-        public required string BorderClass { get; set; }
+        public string BorderClass { get; set; }
 
-        public required string BgColorClass { get; set; }
+        public string BgColorClass { get; set; }
     }
 
     public class AccessModifierTag : TokenTag
