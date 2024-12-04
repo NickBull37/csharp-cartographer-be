@@ -28,4 +28,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="07.Controllers\" />
+    <Folder Include="01.Configuration\" />
+    <Folder Include="04.DataAccess\" />
+    <Folder Include="05.Services\" />
+    <Folder Include="06.Workflows\" />
+  </ItemGroup>
+
 </Project>
