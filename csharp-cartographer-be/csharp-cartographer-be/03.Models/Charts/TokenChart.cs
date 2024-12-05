@@ -9,6 +9,8 @@ namespace csharp_cartographer_be._03.Models.Charts
 
         public int Level { get; set; }
 
+        // add alias prop?
+
         public List<string> Facts { get; set; } = [];
 
         public List<string> Insights { get; set; } = [];

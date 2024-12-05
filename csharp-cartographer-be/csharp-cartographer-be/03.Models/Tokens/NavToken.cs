@@ -87,7 +87,7 @@ namespace csharp_cartographer_be._03.Models.Tokens
 
         public List<TokenChart> Charts { get; set; } = [];
 
-        // Constructor
+        // Default constructor
         public NavToken(SyntaxToken roslynToken, SemanticModel semanticModel, SyntaxTree syntaxTree, int index)
         {
             Index = index;
@@ -148,6 +148,13 @@ namespace csharp_cartographer_be._03.Models.Tokens
                 }
             }
             #endregion
+        }
+
+        // Null-conditional operator constructor
+        public NavToken()
+        {
+            // TODO: the null-conditional operator is currently parsed into two separate tokens.
+            //       add constructor 
         }
 
         private static List<string> GetLeadingTrivia(SyntaxToken roslynToken)

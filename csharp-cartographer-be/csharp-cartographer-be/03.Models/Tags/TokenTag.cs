@@ -11,6 +11,39 @@
         public string BorderClass { get; set; }
 
         public string BgColorClass { get; set; }
+
+        // TODO: add samples property
+        //public List<TagSample> Samples { get; set; }
+    }
+
+    //public class TagSample
+    //{
+    //    public string Label { get; set; } = string.Empty;
+
+    //    public string? Sample { get; set; }
+
+    //    public List<string>? Samples { get; set; }
+    //}
+
+    public class AccessorTag : TokenTag
+    {
+        public AccessorTag()
+        {
+            Label = $"Accessor";
+            Facts =
+            [
+                "Accessors are elements of code within a property or indexer that allow getting or setting the property's value.",
+                "By default, their implementation is implicitly provided by the compiler when using the get or set keywords but can be explicitly defined or customized if needed.",
+                "You can also provide an access modifier to an accessor to control their visibility independently of the property's overall access level.",
+                "The accessors available in C# are \"get\", \"set\", and \"init\""
+            ];
+            Insights =
+            [
+                ""
+            ];
+            BorderClass = "tag-border-blue";
+            BgColorClass = "tag-bg-blue";
+        }
     }
 
     public class AccessModifierTag : TokenTag
@@ -64,6 +97,24 @@
                 "C# allows for single-class inheritance, meaning a class can inherit from only one base class at a time.",
                 "C# allows for multiple-interface inheritance, meaning a class or interface can implement or inherit from multiple interfaces at the same time.",
                 "A class can inherit from a single base class while also implementing multiple interfaces."
+            ];
+            BorderClass = "tag-border-green";
+            BgColorClass = "tag-bg-green";
+        }
+    }
+
+    public class ClassTag : TokenTag
+    {
+        public ClassTag()
+        {
+            Label = $"Class";
+            Facts =
+            [
+                "Classes are blueprints for creating objects. They define the structure and behavior of an object using fields (data) and methods (functions) that operate on the data.",
+            ];
+            Insights =
+            [
+                "",
             ];
             BorderClass = "tag-border-green";
             BgColorClass = "tag-bg-green";
@@ -197,6 +248,43 @@
             ];
             BorderClass = "tag-border-purple";
             BgColorClass = "tag-bg-purple";
+        }
+    }
+
+    public class MethodTag : TokenTag
+    {
+        public MethodTag()
+        {
+            Label = $"Method";
+            Facts =
+            [
+                "Methods are blocks of code that performs a specific task and can be called to execute that task.",
+                "Methods can take inputs (parameters), perform actions, and return a result or void (no result)."
+            ];
+            Insights =
+            [
+                "",
+            ];
+            BorderClass = "tag-border-yellow";
+            BgColorClass = "tag-bg-yellow";
+        }
+    }
+
+    public class OperatorTag : TokenTag
+    {
+        public OperatorTag()
+        {
+            Label = $"Operator";
+            Facts =
+            [
+                "Operators are symbols or keyword that performs a specific operation on one or more operands, such as arithmetic, assignment, comparison, or logical operations.",
+            ];
+            Insights =
+            [
+                "",
+            ];
+            BorderClass = "tag-border-darkpurple";
+            BgColorClass = "tag-bg-darkpurple";
         }
     }
 

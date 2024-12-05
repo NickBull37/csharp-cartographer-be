@@ -1673,15 +1673,38 @@
                 Label = "QuestionQuestionToken",
                 Facts =
                 [
-                    "The '??' token is used for the null-coalescing operator in C#.",
-                    "It provides a default value when the left-hand side expression evaluates to null.",
-                    "The null-coalescing operator is commonly used to simplify null checks."
+                    "Null-coalescing operator",
+                    "When the left-hand side expression evaluates to null, the null-coalescing operator provides a default value on the right.",
                 ],
                 Insights =
                 [
-                    "Use the '??' operator to provide default values for nullable types or reference types.",
-                    "The null-coalescing operator is very helpful for reducing verbose null checks.",
+                    "The null-coalescing operator is commonly used to simplify null checks.",
                     "Chaining '??' with other expressions can help streamline error handling and fallback logic."
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "AmpersandAmpersandToken",
+                Facts =
+                [
+                    "Logical AND operator",
+                ],
+                Insights =
+                [
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "LogicalAndExpression",
+                Facts =
+                [
+                    "The logical AND expression evaluates if the results of two expressions both evaluate to true.",
+                    "If both the expression to the left of the operator and the expression to the right of the operator evaluate to true, the condition passes.",
+                    "If either the expression to the left of the operator or the expression to the right of the operator evaluate to false, the condition fails."
+                ],
+                Insights =
+                [
+                    "Avoid adding too many expressions to one conditional statement. Too many evaluations in one condition can make code harder to read."
                 ],
             },
             new CSharpElement
