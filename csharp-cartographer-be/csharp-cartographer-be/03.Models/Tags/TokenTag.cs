@@ -26,8 +26,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-blue";
-            BgColorClass = "chart-bg-blue";
+            BorderClass = "tag-border-blue";
+            BgColorClass = "tag-bg-blue";
         }
     }
 
@@ -44,8 +44,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-green";
-            BgColorClass = "chart-bg-green";
+            BorderClass = "tag-border-green";
+            BgColorClass = "tag-bg-green";
         }
     }
 
@@ -65,8 +65,27 @@
                 "C# allows for multiple-interface inheritance, meaning a class or interface can implement or inherit from multiple interfaces at the same time.",
                 "A class can inherit from a single base class while also implementing multiple interfaces."
             ];
-            BorderClass = "chart-border-green";
-            BgColorClass = "chart-bg-green";
+            BorderClass = "tag-border-green";
+            BgColorClass = "tag-bg-green";
+        }
+    }
+
+    public class ConstructorTag : TokenTag
+    {
+        public ConstructorTag()
+        {
+            Label = $"Constructor";
+            Facts =
+            [
+                "Constructors are special methods called automatically called when an instance of a class or struct is created.",
+                "Their purpose is to initialize the object, often by setting initial values for its fields or properties."
+            ];
+            Insights =
+            [
+                "",
+            ];
+            BorderClass = "tag-border-green";
+            BgColorClass = "tag-bg-green";
         }
     }
 
@@ -83,8 +102,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-black";
-            BgColorClass = "chart-bg-black";
+            BorderClass = "tag-border-black";
+            BgColorClass = "tag-bg-black";
         }
     }
 
@@ -102,8 +121,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-red";
-            BgColorClass = "chart-bg-red";
+            BorderClass = "tag-border-red";
+            BgColorClass = "tag-bg-red";
         }
     }
 
@@ -121,8 +140,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-green";
-            BgColorClass = "chart-bg-green";
+            BorderClass = "tag-border-green";
+            BgColorClass = "tag-bg-green";
         }
     }
 
@@ -140,8 +159,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-green";
-            BgColorClass = "chart-bg-green";
+            BorderClass = "tag-border-green";
+            BgColorClass = "tag-bg-green";
         }
     }
 
@@ -158,8 +177,8 @@
             [
                 //"Hover your mouse over an identifier in Visual Studio to show details about the identifier."
             ];
-            BorderClass = "chart-border-gray";
-            BgColorClass = "chart-bg-gray";
+            BorderClass = "tag-border-gray";
+            BgColorClass = "tag-bg-gray";
         }
     }
 
@@ -176,8 +195,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-purple";
-            BgColorClass = "chart-bg-purple";
+            BorderClass = "tag-border-purple";
+            BgColorClass = "tag-bg-purple";
         }
     }
 
@@ -194,8 +213,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-indigo";
-            BgColorClass = "chart-bg-indigo";
+            BorderClass = "tag-border-indigo";
+            BgColorClass = "tag-bg-indigo";
         }
     }
 
@@ -212,8 +231,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-orange";
-            BgColorClass = "chart-bg-orange";
+            BorderClass = "tag-border-orange";
+            BgColorClass = "tag-bg-orange";
         }
     }
 
@@ -232,8 +251,8 @@
             [
                 "",
             ];
-            BorderClass = "chart-border-lightgreen";
-            BgColorClass = "chart-bg-lightgreen";
+            BorderClass = "tag-border-lightgreen";
+            BgColorClass = "tag-bg-lightgreen";
         }
     }
 
@@ -250,8 +269,8 @@
             [
                 //"To make code more dynamic, return interfaces when possible. This allows implementation to be more adaptable because the code can return any object that implements the interface.",
             ];
-            BorderClass = "chart-border-purple";
-            BgColorClass = "chart-bg-purple";
+            BorderClass = "tag-border-purple";
+            BgColorClass = "tag-bg-purple";
         }
     }
 
@@ -265,8 +284,8 @@
                 "Primitive types are basic data types provided by the language to represent simple values.",
             ];
             Insights = [];
-            BorderClass = "chart-border-jade";
-            BgColorClass = "chart-bg-jade";
+            BorderClass = "tag-border-jade";
+            BgColorClass = "tag-bg-jade";
         }
     }
 
@@ -285,8 +304,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-cyan";
-            BgColorClass = "chart-bg-cyan";
+            BorderClass = "tag-border-cyan";
+            BgColorClass = "tag-bg-cyan";
         }
     }
 
@@ -303,8 +322,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-lightblue";
-            BgColorClass = "chart-bg-lightblue";
+            BorderClass = "tag-border-lightblue";
+            BgColorClass = "tag-bg-lightblue";
         }
     }
 
@@ -321,8 +340,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-black";
-            BgColorClass = "chart-bg-black";
+            BorderClass = "tag-border-black";
+            BgColorClass = "tag-bg-black";
         }
     }
 
@@ -340,8 +359,8 @@
             [
                 ""
             ];
-            BorderClass = "chart-border-blue";
-            BgColorClass = "chart-bg-blue";
+            BorderClass = "tag-border-blue";
+            BgColorClass = "tag-bg-blue";
         }
     }
 }

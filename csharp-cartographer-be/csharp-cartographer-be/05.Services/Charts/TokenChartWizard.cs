@@ -1,4 +1,5 @@
-﻿using csharp_cartographer_be._03.Models.Charts;
+﻿using csharp_cartographer_be._01.Configuration.CSharpElements;
+using csharp_cartographer_be._03.Models.Charts;
 using csharp_cartographer_be._03.Models.Tokens;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -7,6 +8,24 @@ namespace csharp_cartographer_be._05.Services.Charts
 {
     public class TokenChartWizard : ITokenChartWizard
     {
+        public void AddFactsAndInsightsToNavTokenCharts(List<NavToken> navTokens)
+        {
+            foreach (var token in navTokens)
+            {
+                foreach (var chart in token.Charts)
+                {
+                    foreach (var element in CSharpElements.ElementList)
+                    {
+                        if (chart.Label.Equals(element.Label))
+                        {
+                            chart.Facts = element.Facts;
+                            chart.Insights = element.Insights;
+                        }
+                    }
+                }
+            }
+        }
+
         public void AddHighlightValuesToNavTokenCharts(List<NavToken> navTokens)
         {
             foreach (var token in navTokens)

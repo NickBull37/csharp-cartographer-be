@@ -97,6 +97,7 @@ namespace csharp_cartographer_be._05.Services.Tags
             AddPropertyTagIfNeeded(token);
             AddFieldTagIfNeeded(token);
             AddBaseTypeTagIfNeeded(token);
+            AddConstructorTagIfNeeded(token);
         }
 
         private static void AddAccessModifierTagIfNeeded(NavToken token)
@@ -280,6 +281,16 @@ namespace csharp_cartographer_be._05.Services.Tags
                 && token.ParentNodeKind == "PropertyDeclaration")
             {
                 token.Tags.Add(new PropertyTag());
+            }
+        }
+
+        private static void AddConstructorTagIfNeeded(NavToken token)
+        {
+            // constructors
+            if (token.RoslynKind == "IdentifierToken"
+                && token.ParentNodeKind == "ConstructorDeclaration")
+            {
+                token.Tags.Add(new ConstructorTag());
             }
         }
 

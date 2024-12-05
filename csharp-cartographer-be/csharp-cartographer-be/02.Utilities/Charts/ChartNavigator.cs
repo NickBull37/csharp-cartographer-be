@@ -202,6 +202,10 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 return false;
             }
         }
+
+        // declaration pattern
+
+        // member binding expression
         #endregion
     }
 }

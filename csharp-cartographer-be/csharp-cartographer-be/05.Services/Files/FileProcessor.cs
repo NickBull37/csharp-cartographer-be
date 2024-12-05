@@ -4,17 +4,11 @@ namespace csharp_cartographer_be._05.Services.Files
 {
     public class FileProcessor : IFileProcessor
     {
-        //private readonly string _modelDefinitionDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\01.Configuration\TestFiles\Animal.cs";
-        private readonly string _modelDefinitionDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\03.Models\Tokens\NavToken.cs";
-        private readonly string _workflowDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\05.Services\Artifacts\ArtifactGenerator.cs";
-        private readonly string _serviceDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\05.Services\SyntaxHighlighting\SyntaxHighlighter.cs";
+        private readonly string _modelDefinitionDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\03.Models\Tokens\NavToken.cs";
+        private readonly string _workflowDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\06.Workflows\Artifacts\GenerateArtifactWorkflow.cs";
+        private readonly string _serviceDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\05.Services\Highlighting\SyntaxHighlighter.cs";
         private readonly string _repositoryDemoFilePath = "";
-        private readonly string _controllerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\06.Controllers\Artifacts\ArtifactController.cs";
-
-        private readonly string _testFilePath1 = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\01.Configuration\TestFiles\Animal.cs";
-        private readonly string _testFilePath2 = @"C:\Users\nbuli\source\repos\ss-navigator\ss-navigator\05.Services\Roslyn\RoslynAnalyzer.cs";
-        private readonly string _testFilePath3 = @"C:\Users\nbuli\source\repos\ss-navigator-v2\ss-navigator-v2\05.Services\Constructs\InterfaceWizard.cs";
-        private readonly string _testFilePath4 = @"C:\Users\nbuli\source\repos\csharp-cartographer\csharp-cartographer\csharp-cartographer\06.Controllers\Artifacts\ArtifactController.cs";
+        private readonly string _controllerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\ArtifactController.cs";
 
         public FileProcessor()
         {
