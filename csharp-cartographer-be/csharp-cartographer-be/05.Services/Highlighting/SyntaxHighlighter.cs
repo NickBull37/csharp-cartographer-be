@@ -55,8 +55,8 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     continue;
                 }
 
-                // string literals
-                if (token.Kind == SyntaxKind.StringLiteralToken)
+                // string & char literals
+                if (token.Kind == SyntaxKind.StringLiteralToken || token.Kind == SyntaxKind.CharacterLiteralToken)
                 {
                     token.HighlightColor = "color-orange";
                 }

@@ -331,6 +331,11 @@
             },
             new ReservedTextElement
             {
+                Text = "SyntaxToken",
+                HighlightColor = _jade,
+            },
+            new ReservedTextElement
+            {
                 Text = "TextSpan",
                 HighlightColor = _jade,
             },

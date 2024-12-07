@@ -151,11 +151,11 @@ namespace csharp_cartographer_be._02.Utilities.Charts
 
         public static bool IsInvocation(NavToken token)
         {
-            return token.Charts.Count > 3 &&
-                token.Charts[0].Label == "IdentifierToken" &&
-                token.Charts[1].Label == "IdentifierName" &&
-                token.Charts[2].Label == "SimpleMemberAccessExpression" &&
-                token.Charts[3].Label == "InvocationExpression";
+            return token.Charts.Count > 3
+                && token.Charts[0].Label == "IdentifierToken"
+                && token.Charts[1].Label == "IdentifierName"
+                && (token.Charts[2].Label == "SimpleMemberAccessExpression" || token.Charts[2].Label == "MemberBindingExpression")
+                && token.Charts[3].Label == "InvocationExpression";
         }
 
         public static bool IsStaticClassReference(NavToken token)

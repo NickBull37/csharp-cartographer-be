@@ -9,6 +9,7 @@ namespace csharp_cartographer_be._05.Services.Files
         private readonly string _serviceDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\05.Services\Highlighting\SyntaxHighlighter.cs";
         private readonly string _repositoryDemoFilePath = "";
         private readonly string _controllerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\ArtifactController.cs";
+        private readonly string _helperClassDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\02.Utilities\Helpers\StringHelpers.cs";
 
         public FileProcessor()
         {
@@ -33,6 +34,10 @@ namespace csharp_cartographer_be._05.Services.Files
             else if (fileName == "ArtifactController.cs")
             {
                 testFile = _controllerDemoFilePath;
+            }
+            else if (fileName == "StringHelpers.cs")
+            {
+                testFile = _helperClassDemoFilePath;
             }
 
             if (!string.IsNullOrEmpty(testFile) && !File.Exists(testFile))
