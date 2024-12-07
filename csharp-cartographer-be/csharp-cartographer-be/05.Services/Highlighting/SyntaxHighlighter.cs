@@ -197,6 +197,48 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     token.HighlightColor = "color-light-blue";
                     continue;
                 }
+
+                // exceptions
+                if (ChartNavigator.IsException(token))
+                {
+                    token.HighlightColor = "color-green";
+                    continue;
+                }
+
+                // exception identifiers
+                if (ChartNavigator.IsExceptionIdentifier(token))
+                {
+                    token.HighlightColor = "color-light-blue";
+                    continue;
+                }
+
+                // declaration patterns
+                if (ChartNavigator.IsDeclarationPattern(token))
+                {
+                    token.HighlightColor = "color-green";
+                    continue;
+                }
+
+                // single var designations
+                if (ChartNavigator.IsSingleVarDesignation(token))
+                {
+                    token.HighlightColor = "color-light-blue";
+                    continue;
+                }
+
+                // property access
+                if (ChartNavigator.IsPropertyAccess(token))
+                {
+                    token.HighlightColor = "color-white";
+                    continue;
+                }
+
+                // for loop identifier
+                if (ChartNavigator.IsForLoopIdentifier(token))
+                {
+                    token.HighlightColor = "color-light-blue";
+                    continue;
+                }
             }
         }
 
@@ -222,6 +264,24 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     token.HighlightColor = "color-light-blue";
                     UpdateForEachVariableReferences(navTokens, token.Index);
                 }
+
+                // exception identifier refs
+                if (ChartNavigator.IsExceptionIdentifier(token))
+                {
+                    UpdateExceptionIdentifierReferences(navTokens, token.Index);
+                }
+
+                // single var designation refs
+                if (ChartNavigator.IsSingleVarDesignation(token))
+                {
+                    UpdateSingleVarDesignationReferences(navTokens, token.Index);
+                }
+
+                // for loop identifier refs
+                if (ChartNavigator.IsForLoopIdentifier(token))
+                {
+                    UpdateForLoopIdentifierReferences(navTokens, token.Index);
+                }
             }
         }
 
@@ -245,6 +305,91 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     zeroCount--;
                 }
                 if (zeroCount is 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        private static void UpdateSingleVarDesignationReferences(List<NavToken> tokens, int startIndex)
+        {
+            var identifierName = tokens[startIndex].Text;
+            int zeroCount = 0;
+            bool blockOpened = false;
+
+            for (int i = startIndex + 1; i < tokens.Count; i++)
+            {
+                if (tokens[i].Text == identifierName && zeroCount > 0)
+                {
+                    tokens[i].HighlightColor = "color-light-blue";
+                }
+                if (tokens[i].Text == "{")
+                {
+                    blockOpened = true;
+                    zeroCount++;
+                }
+                if (tokens[i].Text == "}")
+                {
+                    zeroCount--;
+                }
+                if (blockOpened && zeroCount is 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        private static void UpdateForLoopIdentifierReferences(List<NavToken> tokens, int startIndex)
+        {
+            var identifierName = tokens[startIndex].Text;
+            int zeroCount = 0;
+            bool blockOpened = false;
+
+            for (int i = startIndex + 1; i < tokens.Count; i++)
+            {
+                if (tokens[i].Text == identifierName && zeroCount >= 0)
+                {
+                    tokens[i].HighlightColor = "color-light-blue";
+                }
+                if (tokens[i].Text == "{")
+                {
+                    blockOpened = true;
+                    zeroCount++;
+                }
+                if (tokens[i].Text == "}")
+                {
+                    zeroCount--;
+                }
+                // end of block 
+                if (blockOpened && zeroCount is 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        private static void UpdateExceptionIdentifierReferences(List<NavToken> tokens, int startIndex)
+        {
+            var identifierName = tokens[startIndex].Text;
+            int zeroCount = 0;
+            bool blockOpened = false;
+
+            for (int i = startIndex + 1; i < tokens.Count; i++)
+            {
+                if (tokens[i].Text == identifierName && zeroCount > 0)
+                {
+                    tokens[i].HighlightColor = "color-light-blue";
+                }
+                if (tokens[i].Text == "{")
+                {
+                    blockOpened = true;
+                    zeroCount++;
+                }
+                if (tokens[i].Text == "}")
+                {
+                    zeroCount--;
+                }
+                if (blockOpened && zeroCount is 0)
                 {
                     break;
                 }
@@ -383,10 +528,21 @@ namespace csharp_cartographer_be._05.Services.Highlighting
             for (int i = 0; i < navTokens.Count; i++)
             {
                 var token = navTokens[i];
+                bool onLastToken = token.Index == navTokens.Count - 1;
+                var nextToken = onLastToken ? null : navTokens[i + 1];
 
                 if (HighlightColorAlreadySet(token))
                 {
                     continue;
+                }
+
+                // supposed to be for enum & static class member access
+                if (nextToken != null
+                    && ChartNavigator.IsMemberAccess(token)
+                    && !ChartNavigator.IsInvocation(token)
+                    && nextToken.Text == ".")
+                {
+                    token.HighlightColor = "color-green";
                 }
 
                 if (!ChartNavigator.IsInvocation(token))
@@ -394,8 +550,6 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     //token.HighlightColor = "color-red"; // unhighlighted tokens
                     continue;
                 }
-
-                var nextToken = navTokens[i + 1];
 
                 // method invocations
                 if (nextToken.Text == "(")

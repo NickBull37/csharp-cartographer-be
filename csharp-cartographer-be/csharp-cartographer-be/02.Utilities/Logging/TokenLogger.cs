@@ -14,11 +14,18 @@ namespace csharp_cartographer_be._02.Utilities.Logging
 
             foreach (var token in tokenList)
             {
-                if (token.Tags.Count > 1 &&
-                    token.Tags[0].Label == "IdentifierToken")
+                if (token.HighlightColor == "color-red")
                 {
                     LogToken(token);
                 }
+
+                //if (token.Charts.Count > 2 &&
+                //    token.Charts[0].Label == "IdentifierToken"
+                //    && token.Charts[1].Label == "IdentifierName"
+                //    && token.Charts[2].Label == "SimpleMemberAccessExpression")
+                //{
+                //    LogToken(token);
+                //}
 
                 //LogToken(token);
             }

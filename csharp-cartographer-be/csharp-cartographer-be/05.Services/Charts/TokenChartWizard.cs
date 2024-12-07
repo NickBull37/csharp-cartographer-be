@@ -135,7 +135,9 @@ namespace csharp_cartographer_be._05.Services.Charts
         {
             if (chart.Label == "UsingDirective"
                 || chart.Label == "LocalDeclarationStatement"
-                || chart.Label == "ExpressionStatement")
+                || chart.Label == "ExpressionStatement"
+                || chart.Label == "ThrowStatement"
+                || chart.Label == "ReturnStatement")
             {
                 elementStrings.Add(";");
             }

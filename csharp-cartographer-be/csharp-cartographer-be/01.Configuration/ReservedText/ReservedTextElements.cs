@@ -20,6 +20,8 @@
         private const string _orange = "color-orange";
         private const string _yellow = "color-yellow";
         private const string _red = "color-red";
+        private const string _jade = "color-jade";
+        private const string _olive = "color-olive";
 
         public static readonly List<ReservedTextElement> ElementList = new()
         {
@@ -94,6 +96,11 @@
             },
             new ReservedTextElement
             {
+                Text = "DateTime",
+                HighlightColor = _jade,
+            },
+            new ReservedTextElement
+            {
                 Text = "decimal",
                 HighlightColor = _blue,
             },
@@ -116,6 +123,16 @@
             {
                 Text = "enum",
                 HighlightColor = _blue,
+            },
+            new ReservedTextElement
+            {
+                Text = "Equals",
+                HighlightColor = _yellow,
+            },
+            new ReservedTextElement
+            {
+                Text = "Exception",
+                HighlightColor = _green,
             },
             new ReservedTextElement
             {
@@ -306,6 +323,16 @@
             {
                 Text = "switch",
                 HighlightColor = _purple,
+            },
+            new ReservedTextElement
+            {
+                Text = "SyntaxKind",
+                HighlightColor = _olive,
+            },
+            new ReservedTextElement
+            {
+                Text = "TextSpan",
+                HighlightColor = _jade,
             },
             new ReservedTextElement
             {
