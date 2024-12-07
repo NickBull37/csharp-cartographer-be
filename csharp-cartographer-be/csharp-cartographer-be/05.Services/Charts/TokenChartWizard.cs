@@ -30,6 +30,11 @@ namespace csharp_cartographer_be._05.Services.Charts
         {
             foreach (var token in navTokens)
             {
+                if (token.Index == 90)
+                {
+
+                }
+
                 var chartCount = 1;
                 foreach (var chart in token.Charts)
                 {
@@ -49,6 +54,8 @@ namespace csharp_cartographer_be._05.Services.Charts
         private static void GetElementIndices(List<NavToken> navTokens, TokenChart chart)
         {
             List<int> highlightIndices = [];
+
+            // loop through roslyn tokens in chart and create list of strings
             var elementTextStrings = GetElementStrings(chart);
 
             if (elementTextStrings.Count == 0 || navTokens.Count < elementTextStrings.Count)
@@ -56,13 +63,22 @@ namespace csharp_cartographer_be._05.Services.Charts
                 return;
             }
 
+
             for (int i = 0; i <= navTokens.Count - elementTextStrings.Count; i++)
             {
                 bool isMatch = true;
 
                 for (int j = 0; j < elementTextStrings.Count; j++)
                 {
+                    // if nav token strings don't match strings in chart, move on
                     if (navTokens[i + j].Text != elementTextStrings[j])
+                    {
+                        isMatch = false;
+                        break;
+                    }
+
+                    // if strings do match, check that the spans match also in case strings appear more than once
+                    if (chart.Tokens[0].FullSpan != navTokens[i].RoslynToken.FullSpan)
                     {
                         isMatch = false;
                         break;
@@ -109,19 +125,20 @@ namespace csharp_cartographer_be._05.Services.Charts
                 elementStrings.Add(roslynToken.Text);
             }
 
-            // correction - add semi colon for local statements
-            if (chart.Label == "LocalDeclarationStatement")
-            {
-                elementStrings.Add(";");
-            }
-
-            // correction - add semi colon for using directives
-            if (chart.Label == "UsingDirective")
-            {
-                elementStrings.Add(";");
-            }
+            // Add to list of element strings if necessary
+            AddSemiColonString(chart, elementStrings);
 
             return elementStrings;
+        }
+
+        private static void AddSemiColonString(TokenChart chart, List<string> elementStrings)
+        {
+            if (chart.Label == "UsingDirective"
+                || chart.Label == "LocalDeclarationStatement"
+                || chart.Label == "ExpressionStatement")
+            {
+                elementStrings.Add(";");
+            }
         }
     }
 }
