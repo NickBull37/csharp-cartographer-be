@@ -12,18 +12,21 @@
 
         public string BgColorClass { get; set; }
 
-        // TODO: add samples property
-        //public List<TagSample> Samples { get; set; }
+        public string OptionsColorClass { get; set; }
+
+        public string OptionsLabel { get; set; }
+
+        public List<AvailableOption>? Options { get; set; }
     }
 
-    //public class TagSample
-    //{
-    //    public string Label { get; set; } = string.Empty;
+    public class AvailableOption
+    {
+        public string? Label { get; set; }
 
-    //    public string? Sample { get; set; }
+        public string? OptionsText { get; set; }
 
-    //    public List<string>? Samples { get; set; }
-    //}
+        public List<string>? OptionsList { get; set; }
+    }
 
     public class AccessorTag : TokenTag
     {
@@ -61,6 +64,24 @@
             ];
             BorderClass = "tag-border-blue";
             BgColorClass = "tag-bg-blue";
+            OptionsColorClass = "tag-options-blue";
+            OptionsLabel = "The available access modifiers in C# are";
+            Options =
+            [
+                new AvailableOption()
+                {
+                    OptionsText = "public  private  protected  internal  protected\u2011internal  private\u2011protected  file",
+                    OptionsList =
+                    [
+                        "public",
+                        "private",
+                        "protected",
+                        "internal",
+                        "protected internal",
+                        "private protected",
+                    ]
+                }
+            ];
         }
     }
 
@@ -270,57 +291,22 @@
         }
     }
 
-    public class OperatorTag : TokenTag
+    public class ModifierTag : TokenTag
     {
-        public OperatorTag()
+        public ModifierTag()
         {
-            Label = $"Operator";
+            Label = $"Modifier";
             Facts =
             [
-                "Operators are symbols or keyword that performs a specific operation on one or more operands, such as arithmetic, assignment, comparison, or logical operations.",
+                "Modifiers (non-access modifiers) define additional behaviors or characteristics of a member (field, method, property, etc.).",
+                "Non-access modifiers in C# include \"abstract\", \"async\", \"const\", \"override\", \"readonly\", \"sealed\", \"static\", \"virtual\", & \"volatile\"."
             ];
             Insights =
             [
-                "",
+                ""
             ];
-            BorderClass = "tag-border-darkpurple";
-            BgColorClass = "tag-bg-darkpurple";
-        }
-    }
-
-    public class PropertyTag : TokenTag
-    {
-        public PropertyTag()
-        {
-            Label = $"Property";
-            Facts =
-            [
-                "Properties are class members that provide a flexible mechanism to access and modify the value of a class's fields or data, often encapsulating logic for getting and setting values.",
-            ];
-            Insights =
-            [
-                "",
-            ];
-            BorderClass = "tag-border-indigo";
-            BgColorClass = "tag-bg-indigo";
-        }
-    }
-
-    public class StringLiteralTag : TokenTag
-    {
-        public StringLiteralTag()
-        {
-            Label = $"String Literal";
-            Facts =
-            [
-                "String literals are a sequence of characters enclosed in double quotes (\" \"), representing a constant text value.",
-            ];
-            Insights =
-            [
-                "",
-            ];
-            BorderClass = "tag-border-orange";
-            BgColorClass = "tag-bg-orange";
+            BorderClass = "tag-border-blue";
+            BgColorClass = "tag-bg-blue";
         }
     }
 
@@ -344,36 +330,21 @@
         }
     }
 
-    public class ReturnTypeTag : TokenTag
+    public class OperatorTag : TokenTag
     {
-        public ReturnTypeTag()
+        public OperatorTag()
         {
-            Label = $"Return Type";
+            Label = $"Operator";
             Facts =
             [
-                "The return type specifies the type of value that a method returns to its caller and is defined before the method name in the method declaration..",
+                "Operators are symbols or keyword that performs a specific operation on one or more operands, such as arithmetic, assignment, comparison, or logical operations.",
             ];
             Insights =
             [
-                //"To make code more dynamic, return interfaces when possible. This allows implementation to be more adaptable because the code can return any object that implements the interface.",
+                "",
             ];
-            BorderClass = "tag-border-purple";
-            BgColorClass = "tag-bg-purple";
-        }
-    }
-
-    public class PrimitiveTypeTag : TokenTag
-    {
-        public PrimitiveTypeTag()
-        {
-            Label = $"Primitive Type";
-            Facts =
-            [
-                "Primitive types are basic data types provided by the language to represent simple values.",
-            ];
-            Insights = [];
-            BorderClass = "tag-border-jade";
-            BgColorClass = "tag-bg-jade";
+            BorderClass = "tag-border-darkpurple";
+            BgColorClass = "tag-bg-darkpurple";
         }
     }
 
@@ -415,6 +386,128 @@
         }
     }
 
+    public class PredefinedTypeTag : TokenTag
+    {
+        public PredefinedTypeTag()
+        {
+            Label = $"Predefined Type";
+            Facts =
+            [
+                "Predefined types refer to all data types that are natively supported by the C# language.",
+                "These types are aliases for corresponding .NET Framework types (e.g., int is an alias for System.Int32)."
+            ];
+            Insights = [];
+            BorderClass = "tag-border-darkjade";
+            BgColorClass = "tag-bg-darkjade";
+        }
+    }
+
+    public class PrimitiveTypeTag : TokenTag
+    {
+        public PrimitiveTypeTag()
+        {
+            Label = $"Primitive Type";
+            Facts =
+            [
+                "Primitive types are a subset of predefined types that are directly mapped to low-level data types in the Common Language Runtime (CLR).",
+                "These are the most basic data types the C# language has to offer and are typically optimized for performance."
+            ];
+            Insights = [];
+            BorderClass = "tag-border-jade";
+            BgColorClass = "tag-bg-jade";
+            //OptionsColorClass = "tag-option-jade";
+            //OptionsLabel = "The available primitive types in C# are";
+            //Options =
+            //[
+            //    new AvailableOption()
+            //    {
+            //        Label = "Integral Types",
+            //        OptionsText = "byte  sbyte  short  ushort  int  uint  long  ulong  char"
+            //    },
+            //    new AvailableOption()
+            //    {
+            //        Label = "Floating-point Types",
+            //        OptionsText = "float  double  decimal"
+            //    },
+            //    new AvailableOption()
+            //    {
+            //        Label = "Other Types",
+            //        OptionsText = "bool  string  object  void"
+            //    }
+            //];
+        }
+    }
+
+    public class PrimitiveIntegralTypeTag : TokenTag
+    {
+        public PrimitiveIntegralTypeTag()
+        {
+            Label = $"Primitive Type: Integral";
+            Facts =
+            [
+                "Primitive types are a subset of predefined types that are directly mapped to low-level data types in the Common Language Runtime (CLR).",
+                "These are the most basic data types the C# language has to offer and are typically optimized for performance.",
+                "Integral types are value types that represent whole numbers without fractional parts."
+            ];
+            Insights = [];
+            BorderClass = "tag-border-jade";
+            BgColorClass = "tag-bg-jade";
+            OptionsColorClass = "tag-option-jade";
+            OptionsLabel = "The predefined integral types in C# are";
+            Options =
+            [
+                new AvailableOption()
+                {
+                    OptionsText = "byte  sbyte  short  ushort  int  uint  long  ulong  char"
+                },
+            ];
+        }
+    }
+
+    public class PrimitiveFloatingPointTypeTag : TokenTag
+    {
+        public PrimitiveFloatingPointTypeTag()
+        {
+            Label = $"Primitive Type: Floating-point";
+            Facts =
+            [
+                "Primitive types are a subset of predefined types that are directly mapped to low-level data types in the Common Language Runtime (CLR).",
+                "These are the most basic data types the C# language has to offer and are typically optimized for performance.",
+                "Floating-point types are value types used to represent numbers with fractional parts."
+            ];
+            Insights = [];
+            BorderClass = "tag-border-jade";
+            BgColorClass = "tag-bg-jade";
+            OptionsColorClass = "tag-option-jade";
+            OptionsLabel = "The predefined floating-point types in C# are";
+            Options =
+            [
+                new AvailableOption()
+                {
+                    OptionsText = "float  double  decimal"
+                },
+            ];
+        }
+    }
+
+    public class PropertyTag : TokenTag
+    {
+        public PropertyTag()
+        {
+            Label = $"Property";
+            Facts =
+            [
+                "Properties are class members that provide a flexible mechanism to access and modify the value of a class's fields or data, often encapsulating logic for getting and setting values.",
+            ];
+            Insights =
+            [
+                "",
+            ];
+            BorderClass = "tag-border-indigo";
+            BgColorClass = "tag-bg-indigo";
+        }
+    }
+
     public class PunctuationTag : TokenTag
     {
         public PunctuationTag()
@@ -433,22 +526,39 @@
         }
     }
 
-    public class ModifierTag : TokenTag
+    public class ReturnTypeTag : TokenTag
     {
-        public ModifierTag()
+        public ReturnTypeTag()
         {
-            Label = $"Modifier";
+            Label = $"Return Type";
             Facts =
             [
-                "Modifiers (non-access modifiers) define additional behaviors or characteristics of a member (field, method, property, etc.).",
-                "Non-access modifiers in C# include \"abstract\", \"async\", \"const\", \"override\", \"readonly\", \"sealed\", \"static\", \"virtual\", & \"volatile\"."
+                "The return type specifies the type of value that a method returns to its caller and is defined before the method name in the method declaration..",
             ];
             Insights =
             [
-                ""
+                //"To make code more dynamic, return interfaces when possible. This allows implementation to be more adaptable because the code can return any object that implements the interface.",
             ];
-            BorderClass = "tag-border-blue";
-            BgColorClass = "tag-bg-blue";
+            BorderClass = "tag-border-purple";
+            BgColorClass = "tag-bg-purple";
+        }
+    }
+
+    public class StringLiteralTag : TokenTag
+    {
+        public StringLiteralTag()
+        {
+            Label = $"String Literal";
+            Facts =
+            [
+                "String literals are a sequence of characters enclosed in double quotes (\" \"), representing a constant text value.",
+            ];
+            Insights =
+            [
+                "",
+            ];
+            BorderClass = "tag-border-orange";
+            BgColorClass = "tag-bg-orange";
         }
     }
 }

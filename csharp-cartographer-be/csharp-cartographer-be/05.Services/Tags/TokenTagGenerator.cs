@@ -37,6 +37,45 @@ namespace csharp_cartographer_be._05.Services.Tags
             "BoolKeyword"
         ];
 
+        private static readonly List<string> _predefinedTypes =
+        [
+            "byte",
+            "sbyte",
+            "short",
+            "ushort",
+            "int",
+            "uint",
+            "long",
+            "ulong",
+            "char",
+            "float",
+            "double",
+            "decimal",
+            "bool",
+            "string",
+            "object",
+            "dynamic",
+        ];
+
+        private static readonly List<string> _primitiveIntegralTypes =
+        [
+            "byte",
+            "sbyte",
+            "short",
+            "ushort",
+            "int",
+            "uint",
+            "long",
+            "ulong",
+            "char",
+        ];
+
+        private static readonly List<string> _primitiveFloatingPointTypes =
+        [
+            "double",
+            "float"
+        ];
+
         private static readonly List<string> _accessModifiers =
         [
             "PublicKeyword",
@@ -156,7 +195,10 @@ namespace csharp_cartographer_be._05.Services.Tags
 
             AddAccessModifierTagIfNeeded(token);
             AddModifierTagIfNeeded(token);
-            AddPrimitiveTypeTagIfNeeded(token);
+            AddPredefinedTypeTagIfNeeded(token);
+            //AddPrimitiveTypeTagIfNeeded(token);
+            AddPrimitiveIntegralTypeTagIfNeeded(token);
+            AddPrimitiveFloatingPointTypeTagIfNeeded(token);
             AddParameterTagIfNeeded(token);
             AddParameterTypeTagIfNeeded(token);
             AddStringLiteralTagIfNeeded(token);
@@ -336,12 +378,38 @@ namespace csharp_cartographer_be._05.Services.Tags
             }
         }
 
+        private static void AddPredefinedTypeTagIfNeeded(NavToken token)
+        {
+            if (_predefinedTypes.Contains(token.Text))
+            {
+                token.Tags.Add(new PredefinedTypeTag());
+            }
+        }
+
         private static void AddPrimitiveTypeTagIfNeeded(NavToken token)
         {
             if (_primitiveTypes.Contains(token.RoslynKind)
                 && token.ParentNodeKind == "PredefinedType")
             {
                 token.Tags.Add(new PrimitiveTypeTag());
+            }
+        }
+
+        private static void AddPrimitiveIntegralTypeTagIfNeeded(NavToken token)
+        {
+            if (_primitiveIntegralTypes.Contains(token.Text)
+                && token.ParentNodeKind == "PredefinedType")
+            {
+                token.Tags.Add(new PrimitiveIntegralTypeTag());
+            }
+        }
+
+        private static void AddPrimitiveFloatingPointTypeTagIfNeeded(NavToken token)
+        {
+            if (_primitiveFloatingPointTypes.Contains(token.Text)
+                && token.ParentNodeKind == "PredefinedType")
+            {
+                token.Tags.Add(new PrimitiveFloatingPointTypeTag());
             }
         }
 
