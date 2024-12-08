@@ -90,6 +90,11 @@ namespace csharp_cartographer_be._03.Models.Tokens
         // Default constructor
         public NavToken(SyntaxToken roslynToken, SemanticModel semanticModel, SyntaxTree syntaxTree, int index)
         {
+            if (index == 59)
+            {
+
+            }
+
             Index = index;
 
             #region Lexical (token) data
@@ -261,6 +266,13 @@ namespace csharp_cartographer_be._03.Models.Tokens
 
             foreach (var trivia in roslynToken.TrailingTrivia)
             {
+                // handle trailing trivia that contains "\n" instead of "\r\n"
+                if (trivia.IsKind(SyntaxKind.EndOfLineTrivia))
+                {
+                    trailingTriviaStrings.Add(SyntaxFactory.EndOfLine("\r\n").ToString());
+                    continue;
+                }
+
                 trailingTriviaStrings.Add(trivia.ToString());
             }
 

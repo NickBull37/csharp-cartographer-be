@@ -7,7 +7,7 @@ namespace csharp_cartographer_be._05.Services.Files
         private readonly string _modelDefinitionDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\03.Models\Tokens\NavToken.cs";
         private readonly string _workflowDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\06.Workflows\Artifacts\GenerateArtifactWorkflow.cs";
         private readonly string _serviceDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\05.Services\Highlighting\SyntaxHighlighter.cs";
-        private readonly string _repositoryDemoFilePath = "";
+        private readonly string _repositoryDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\04.DataAccess\Artifacts\ArtifactRepository.cs";
         private readonly string _controllerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\ArtifactController.cs";
         private readonly string _helperClassDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\02.Utilities\Helpers\StringHelpers.cs";
 
@@ -30,6 +30,10 @@ namespace csharp_cartographer_be._05.Services.Files
             else if (fileName == "SyntaxHighlighter.cs")
             {
                 testFile = _serviceDemoFilePath;
+            }
+            else if (fileName == "ArtifactRepository.cs")
+            {
+                testFile = _repositoryDemoFilePath;
             }
             else if (fileName == "ArtifactController.cs")
             {

@@ -37,7 +37,6 @@
 
   <ItemGroup>
     <Folder Include="02.Utilities\Logging\Logs\" />
-    <Folder Include="04.DataAccess\" />
   </ItemGroup>
 
 </Project>

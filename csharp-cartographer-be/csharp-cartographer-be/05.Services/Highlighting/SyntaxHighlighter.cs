@@ -1,12 +1,21 @@
-﻿using csharp_cartographer_be._01.Configuration.ReservedText;
+﻿using csharp_cartographer_be._01.Configuration.CartographerConfig;
+using csharp_cartographer_be._01.Configuration.ReservedText;
 using csharp_cartographer_be._02.Utilities.Charts;
 using csharp_cartographer_be._03.Models.Tokens;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.Extensions.Options;
 
 namespace csharp_cartographer_be._05.Services.Highlighting
 {
     public class SyntaxHighlighter : ISyntaxHighlighter
     {
+        private readonly CartographerConfig _config;
+
+        public SyntaxHighlighter(IOptions<CartographerConfig> config)
+        {
+            _config = config.Value;
+        }
+
         public void AddSyntaxHighlightingToNavTokens(List<NavToken> navTokens)
         {
             AddReservedTextHighlighting(navTokens);
@@ -18,6 +27,11 @@ namespace csharp_cartographer_be._05.Services.Highlighting
             AddIdentifierReferenceHighlighting(navTokens);
 
             AddHighlightingThatNeedsSurroundingTokens(navTokens);
+
+            if (_config.ShowUnhighlightedTokens)
+            {
+                HighlightRemainingTokens(navTokens);
+            }
         }
 
         private static void AddReservedTextHighlighting(List<NavToken> navTokens)
@@ -547,7 +561,6 @@ namespace csharp_cartographer_be._05.Services.Highlighting
 
                 if (!ChartNavigator.IsInvocation(token))
                 {
-                    //token.HighlightColor = "color-red"; // unhighlighted tokens
                     continue;
                 }
 
@@ -561,6 +574,17 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 if (nextToken.Text == "." && token.SymbolKind != "Field")
                 {
                     token.HighlightColor = "color-green";
+                }
+            }
+        }
+
+        private static void HighlightRemainingTokens(List<NavToken> navTokens)
+        {
+            foreach (var token in navTokens)
+            {
+                if (string.IsNullOrEmpty(token.HighlightColor))
+                {
+                    token.HighlightColor = "color-red";
                 }
             }
         }
