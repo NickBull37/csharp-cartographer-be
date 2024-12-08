@@ -1,4 +1,5 @@
 ﻿using csharp_cartographer_be._03.Models.Files;
+using csharp_cartographer_be._07.Controllers.Artifacts.DtoModels;
 
 namespace csharp_cartographer_be._05.Services.Files
 {
@@ -11,7 +12,7 @@ namespace csharp_cartographer_be._05.Services.Files
         private readonly string _controllerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\ArtifactController.cs";
         private readonly string _helperClassDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\02.Utilities\Helpers\StringHelpers.cs";
         private readonly string _configDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\01.Configuration\CartographerConfig\CartographerConfig.cs";
-        private readonly string _dtoDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\Dtos\ArtifactDto.cs";
+        private readonly string _dtoDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\DtoModels\GenerateArtifactDto.cs";
 
         public FileData ReadInTestFileData(string fileName)
         {
@@ -24,7 +25,7 @@ namespace csharp_cartographer_be._05.Services.Files
                 "ArtifactController.cs" => _controllerDemoFilePath,
                 "StringHelpers.cs" => _helperClassDemoFilePath,
                 "CartographerConfig.cs" => _configDemoFilePath,
-                "ArtifactDto.cs" => _dtoDemoFilePath,
+                "GenerateArtifactDto.cs" => _dtoDemoFilePath,
                 _ => string.Empty
             };
 
@@ -46,16 +47,10 @@ namespace csharp_cartographer_be._05.Services.Files
             };
         }
 
-        public FileData ReadInFileData(string fileName, string sourceCode)
+        public FileData ReadInFileData(GenerateArtifactDto requestDto)
         {
-            if (string.IsNullOrEmpty(sourceCode))
-            {
-                Console.WriteLine("Source code is empty or null.");
-                throw new ArgumentException("Source code cannot be null or empty.");
-            }
-
             var fileLines = new List<string>();
-            using (StringReader sr = new(sourceCode))
+            using (StringReader sr = new(requestDto.FileContent))
             {
                 string? line;
                 while ((line = sr.ReadLine()) != null)
@@ -66,9 +61,9 @@ namespace csharp_cartographer_be._05.Services.Files
 
             return new FileData
             {
-                FileName = fileName,
+                FileName = requestDto.FileName,
                 FileLines = fileLines,
-                Content = sourceCode
+                Content = requestDto.FileContent
             };
         }
     }

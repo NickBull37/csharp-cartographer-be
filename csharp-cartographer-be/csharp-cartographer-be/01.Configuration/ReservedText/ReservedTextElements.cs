@@ -649,6 +649,31 @@
                 Text = "OfTypeIterator",
                 HighlightColor = _yellow,
             },
+
+            /// **************************************************
+            /// |                     OTHER                      |
+            /// **************************************************
+
+            new ReservedTextElement
+            {
+                Text = "Guid",
+                HighlightColor = _jade,
+            },
+            new ReservedTextElement
+            {
+                Text = "record",
+                HighlightColor = _blue,
+            },
+            new ReservedTextElement
+            {
+                Text = "init",
+                HighlightColor = _blue,
+            },
+            new ReservedTextElement
+            {
+                Text = "TokenType",
+                HighlightColor = _olive,
+            },
         };
     }
 }

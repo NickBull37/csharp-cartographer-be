@@ -49,6 +49,11 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     token.HighlightColor = "color-blue";
                     continue;
                 }
+                else if (token.Text == "default")
+                {
+                    token.HighlightColor = "color-blue";
+                    continue;
+                }
 
                 foreach (var element in ReservedTextElements.ElementList)
                 {
@@ -256,6 +261,13 @@ namespace csharp_cartographer_be._05.Services.Highlighting
 
                 // object creation identifiers
                 if (ChartNavigator.IsObjectCreationIdentifier(token))
+                {
+                    token.HighlightColor = "color-green";
+                    continue;
+                }
+
+                // record declaration
+                if (ChartNavigator.IsRecordDeclaration(token))
                 {
                     token.HighlightColor = "color-green";
                     continue;

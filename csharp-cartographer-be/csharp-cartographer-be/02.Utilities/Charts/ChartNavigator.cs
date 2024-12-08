@@ -236,6 +236,13 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 token.Charts[2].Label == "PropertyDeclaration";
         }
 
+        public static bool IsRecordDeclaration(NavToken token)
+        {
+            return token.Charts.Count > 1 &&
+                token.Charts[0].Label == "IdentifierToken" &&
+                token.Charts[1].Label == "RecordDeclaration";
+        }
+
         public static bool IsSingleVarDesignation(NavToken token)
         {
             return token.Charts.Count > 1 &&

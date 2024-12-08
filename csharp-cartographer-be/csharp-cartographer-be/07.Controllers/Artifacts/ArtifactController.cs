@@ -1,4 +1,5 @@
 ﻿using csharp_cartographer_be._06.Workflows.Artifacts;
+using csharp_cartographer_be._07.Controllers.Artifacts.DtoModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csharp_cartographer_be._07.Controllers.Artifacts
@@ -43,5 +44,24 @@ namespace csharp_cartographer_be._07.Controllers.Artifacts
             }
         }
         #endregion
+
+        [HttpPost]
+        [Route("generate-artifact")]
+        public async Task<IActionResult> GenerateArtifact([FromBody] GenerateArtifactDto dto)
+        {
+            try
+            {
+                var artifact = _generateArtifactWorkflow.ExecGenerateArtifact(dto);
+
+                return Ok(artifact);
+            }
+            catch (Exception ex)
+            {
+                return Problem(
+                    type: "Internal Server Error",
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
