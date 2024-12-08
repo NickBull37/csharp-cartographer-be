@@ -20,6 +20,15 @@ namespace csharp_cartographer_be._07.Controllers.Artifacts
         [Route("get-demo-artifact")]
         public async Task<IActionResult> GetDemoArtifact([FromQuery] string fileName)
         {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                return Problem(
+                    type: "Bad Request",
+                    title: "Invalid file name",
+                    detail: "The file name must match one of the existing demo files available.",
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+
             try
             {
                 var artifact = _generateArtifactWorkflow.ExecGenerateDemoArtifact(fileName);
@@ -27,7 +36,10 @@ namespace csharp_cartographer_be._07.Controllers.Artifacts
             }
             catch (Exception ex)
             {
-                return Problem(statusCode: 500, title: ex.Message);
+                return Problem(
+                    type: "Internal Server Error",
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError);
             }
         }
         #endregion

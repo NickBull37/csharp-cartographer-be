@@ -17,6 +17,19 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = context =>
+    {
+        context.ProblemDetails.Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+
+        context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+
+        var activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+        context.ProblemDetails.Extensions.TryAdd("traceId", activity?.Id);
+    };
+});
+
 // configure strongly typed settings object
 builder.Services.Configure<CartographerConfig>(builder.Configuration.GetSection("CartographerConfig"));
 
