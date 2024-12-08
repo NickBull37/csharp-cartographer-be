@@ -20,6 +20,7 @@ namespace csharp_cartographer_be._05.Services.Charts
                         {
                             chart.Facts = element.Facts;
                             chart.Insights = element.Insights;
+                            chart.Alias = element.Alias;
                         }
                     }
                 }

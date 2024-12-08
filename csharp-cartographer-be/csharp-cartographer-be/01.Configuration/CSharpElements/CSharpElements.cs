@@ -3,6 +3,7 @@
     public class CSharpElement
     {
         public string Label { get; init; } = string.Empty;
+        public string? Alias { get; init; }
         public List<string> Facts { get; set; } = [];
         public List<string> Insights { get; set; } = [];
     }
@@ -33,7 +34,6 @@
                 ],
                 Insights =
                 [
-                    "",
                 ],
             },
             new CSharpElement
@@ -367,11 +367,12 @@
                 Label = "ParameterList",
                 Facts =
                 [
-                    "",
+                    "A parameter list refers to the collection of parameters defined within the parentheses of a method, constructor, indexer, or delegate declaration.",
+                    "These parameters specify the inputs that the method or function can accept when it is called.",
                 ],
                 Insights =
                 [
-                    "",
+                    "Highlight the parameter list to see all the parameters available in the implementation below."
                 ],
             },
             new CSharpElement
@@ -703,54 +704,6 @@
                     "Class references enable inheritance and method overriding in derived classes."
                 ],
             },
-            //new CSharpElement
-            //{
-            //    Label = "ParameterDataType - Interface",
-            //    Facts =
-            //    [
-            //        "",
-            //    ],
-            //    Insights =
-            //    [
-            //        "",
-            //    ],
-            //},
-            //new CSharpElement
-            //{
-            //    Label = "ParameterDataType - Class",
-            //    Facts =
-            //    [
-            //        "",
-            //    ],
-            //    Insights =
-            //    [
-            //        "",
-            //    ],
-            //},
-            new CSharpElement
-            {
-                Label = "FieldDataType - Interface",
-                Facts =
-                [
-                    "",
-                ],
-                Insights =
-                [
-                    "",
-                ],
-            },
-            new CSharpElement
-            {
-                Label = "FieldDataType - Class",
-                Facts =
-                [
-                    "",
-                ],
-                Insights =
-                [
-                    "",
-                ],
-            },
             new CSharpElement
             {
                 Label = "InheritedInterface",
@@ -797,7 +750,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -894,7 +846,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -906,7 +857,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -919,7 +869,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -931,7 +880,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -956,7 +904,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -968,7 +915,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -980,7 +926,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -992,7 +937,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1004,7 +948,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1016,7 +959,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1028,7 +970,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1040,7 +981,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1052,7 +992,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1064,7 +1003,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1077,7 +1015,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1090,7 +1027,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1102,7 +1038,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1114,7 +1049,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1127,7 +1061,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1139,7 +1072,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1151,7 +1083,6 @@
                 ],
                 Insights =
                 [
-                    ""
                 ],
             },
             new CSharpElement
@@ -1671,9 +1602,9 @@
             new CSharpElement
             {
                 Label = "QuestionQuestionToken",
+                Alias = "Null-coalescing operator",
                 Facts =
                 [
-                    "Null-coalescing operator",
                     "When the left-hand side expression evaluates to null, the null-coalescing operator provides a default value on the right.",
                 ],
                 Insights =
@@ -1685,9 +1616,11 @@
             new CSharpElement
             {
                 Label = "AmpersandAmpersandToken",
+                Alias = "Logical AND operator",
                 Facts =
                 [
-                    "Logical AND operator",
+                    "The \'&&\' operator is used to evaluate two expressions at one time.",
+                    "The expressions evaluated must return type bool."
                 ],
                 Insights =
                 [
@@ -1881,6 +1814,79 @@
                     "Use 'default' to initialize variables with type-safe defaults in generics or nullable contexts.",
                     "The 'default' case in switch statements ensures all possible inputs are handled.",
                     "Leverage the 'default' literal for cleaner and safer default initializations."
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "PlusPlusToken",
+                Alias = "Increment operator",
+                Facts =
+                [
+                    "The \'++\' operator is used to increase the value of a numeric variable by 1.",
+                ],
+                Insights =
+                [
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "MinusMinusToken",
+                Alias = "Decrement operator",
+                Facts =
+                [
+                    "The \'--\' operator is used to decrease the value of a numeric variable by 1.",
+                ],
+                Insights =
+                [
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "BarBarToken",
+                Alias = "Logical OR operator",
+                Facts =
+                [
+                    "The \'||\' operator is used to evaluate two expressions at one time.",
+                    "The expressions evaluated must return type bool."
+                ],
+                Insights =
+                [
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "ExclamationToken",
+                Alias = "Logical NOT operator",
+                Facts =
+                [
+                    "The \'!\' operator is used to negate a boolean expression.",
+                ],
+                Insights =
+                [
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "ExclamationEqualsToken",
+                Alias = "Inequality operator",
+                Facts =
+                [
+                    "The \'!=\' operator is used to .",
+                ],
+                Insights =
+                [
+                ],
+            },
+            new CSharpElement
+            {
+                Label = "EqualsEqualsToken",
+                Alias = "Equality operator",
+                Facts =
+                [
+                    "The \'==\' operator is used to .",
+                ],
+                Insights =
+                [
                 ],
             },
         };
