@@ -10,48 +10,26 @@ namespace csharp_cartographer_be._05.Services.Files
         private readonly string _repositoryDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\04.DataAccess\Artifacts\ArtifactRepository.cs";
         private readonly string _controllerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\ArtifactController.cs";
         private readonly string _helperClassDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\02.Utilities\Helpers\StringHelpers.cs";
-
-        public FileProcessor()
-        {
-        }
+        private readonly string _configDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\01.Configuration\CartographerConfig\CartographerConfig.cs";
+        private readonly string _dtoDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\Dtos\ArtifactDto.cs";
 
         public FileData ReadInTestFileData(string fileName)
         {
-            string testFile = string.Empty;
-
-            if (fileName == "Animal.cs")
+            var demoFile = fileName switch
             {
-                testFile = _modelDefinitionDemoFilePath;
-            }
-            else if (fileName == "RoslynAnalyzer.cs")
-            {
-                testFile = _workflowDemoFilePath;
-            }
-            else if (fileName == "SyntaxHighlighter.cs")
-            {
-                testFile = _serviceDemoFilePath;
-            }
-            else if (fileName == "ArtifactRepository.cs")
-            {
-                testFile = _repositoryDemoFilePath;
-            }
-            else if (fileName == "ArtifactController.cs")
-            {
-                testFile = _controllerDemoFilePath;
-            }
-            else if (fileName == "StringHelpers.cs")
-            {
-                testFile = _helperClassDemoFilePath;
-            }
-
-            if (!string.IsNullOrEmpty(testFile) && !File.Exists(testFile))
-            {
-                Console.WriteLine("File does not exist.");
-                throw new FileNotFoundException();
-            }
+                "NavToken.cs" => _modelDefinitionDemoFilePath,
+                "GenerateArtifactWorkflow.cs" => _workflowDemoFilePath,
+                "SyntaxHighlighter.cs" => _serviceDemoFilePath,
+                "ArtifactRepository.cs" => _repositoryDemoFilePath,
+                "ArtifactController.cs" => _controllerDemoFilePath,
+                "StringHelpers.cs" => _helperClassDemoFilePath,
+                "CartographerConfig.cs" => _configDemoFilePath,
+                "ArtifactDto.cs" => _dtoDemoFilePath,
+                _ => string.Empty
+            };
 
             var fileLines = new List<string>();
-            using (StreamReader sr = new(testFile))
+            using (StreamReader sr = new(demoFile))
             {
                 string? line;
                 while ((line = sr.ReadLine()) != null)
@@ -62,9 +40,9 @@ namespace csharp_cartographer_be._05.Services.Files
 
             return new FileData
             {
-                FileName = Path.GetFileName(testFile),
+                FileName = Path.GetFileName(demoFile),
                 FileLines = fileLines,
-                Content = File.ReadAllText(testFile)
+                Content = File.ReadAllText(demoFile)
             };
         }
 

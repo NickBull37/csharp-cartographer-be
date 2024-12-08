@@ -253,6 +253,13 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     token.HighlightColor = "color-light-blue";
                     continue;
                 }
+
+                // object creation identifiers
+                if (ChartNavigator.IsObjectCreationIdentifier(token))
+                {
+                    token.HighlightColor = "color-green";
+                    continue;
+                }
             }
         }
 

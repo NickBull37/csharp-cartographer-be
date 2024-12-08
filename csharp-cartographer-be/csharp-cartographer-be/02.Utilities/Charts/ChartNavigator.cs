@@ -158,15 +158,6 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 && token.Charts[3].Label == "InvocationExpression";
         }
 
-        public static bool IsStaticClassReference(NavToken token)
-        {
-            return token.Charts.Count > 3 &&
-                token.Charts[0].Label == "IdentifierToken" &&
-                token.Charts[1].Label == "IdentifierName" &&
-                token.Charts[2].Label == "SimpleMemberAccessExpression" &&
-                token.Charts[3].Label != "SimpleMemberAccessExpression";
-        }
-
         public static bool IsMemberAccess(NavToken token)
         {
             return token.Charts.Count > 2 &&
@@ -196,6 +187,14 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 token.Charts[0].Label == "IdentifierToken" &&
                 token.Charts[1].Label == "IdentifierName" &&
                 token.Charts[2].Label == "NamespaceDeclaration";
+        }
+
+        public static bool IsObjectCreationIdentifier(NavToken token)
+        {
+            return token.Charts.Count > 2 &&
+                token.Charts[0].Label == "IdentifierToken" &&
+                token.Charts[1].Label == "IdentifierName" &&
+                token.Charts[2].Label == "ObjectCreationExpression";
         }
 
         public static bool IsParameter(NavToken token)
@@ -242,6 +241,15 @@ namespace csharp_cartographer_be._02.Utilities.Charts
             return token.Charts.Count > 1 &&
                 token.Charts[0].Label == "IdentifierToken" &&
                 token.Charts[1].Label == "SingleVariableDesignation";
+        }
+
+        public static bool IsStaticClassReference(NavToken token)
+        {
+            return token.Charts.Count > 3 &&
+                token.Charts[0].Label == "IdentifierToken" &&
+                token.Charts[1].Label == "IdentifierName" &&
+                token.Charts[2].Label == "SimpleMemberAccessExpression" &&
+                token.Charts[3].Label != "SimpleMemberAccessExpression";
         }
 
         public static bool IsTypeArgument(NavToken token)
