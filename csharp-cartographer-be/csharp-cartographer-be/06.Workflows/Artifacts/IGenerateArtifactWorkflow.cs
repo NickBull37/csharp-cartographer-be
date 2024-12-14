@@ -7,6 +7,6 @@ namespace csharp_cartographer_be._06.Workflows.Artifacts
     {
         Artifact ExecGenerateDemoArtifact(string fileName);
 
-        Artifact ExecGenerateArtifact(GenerateArtifactDto requestDto);
+        Artifact ExecGenerateUserArtifact(GenerateArtifactDto requestDto);
     }
 }

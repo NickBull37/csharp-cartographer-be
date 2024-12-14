@@ -40,114 +40,77 @@ namespace csharp_cartographer_be._06.Workflows.Artifacts
 
         public Artifact ExecGenerateDemoArtifact(string fileName)
         {
+            // Step 0. Read in source code from demo file path & generate FileData.
+            FileData fileData = _fileProcessor.ReadInTestFileData(fileName);
+            return GenerateArtifact(fileData);
+        }
+
+        public Artifact ExecGenerateUserArtifact(GenerateArtifactDto requestDto)
+        {
+            // Step 0. Read in source code from user uploaded file & generate FileData.
+            FileData fileData = _fileProcessor.ReadInFileData(requestDto);
+            return GenerateArtifact(fileData);
+        }
+
+        private Artifact GenerateArtifact(FileData fileData)
+        {
             /*
              *   Steps to generate an artifact:
              * 
-             *   1. Read in source code from demo file path & generate FileData.
-             *   2. Generate SyntaxTree with FileData.
+             *   1. Start stopwatch.
+             *   2. Generate SyntaxTree with passed in FileData.
              *   3. Generate CompilationUnit with SyntaxTree.
              *   4. Generate SemanticModel with CompilationUnit & SyntaxTree.
-             *   5. Use SyntaxTree & SemanticModel to generate NavTokens for the demo artifact.
+             *   5. Use SyntaxTree & SemanticModel to generate NavTokens for the artifact.
              *   6. Generate TokenTags.
              *   7. Generate TokenCharts.
              *   8. Add TokenCharts highlight indices for highlighting in the code viewer.
              *   9. Add TokenTags definitions & insights.
              *   10. Add syntax highlighting for all NavTokens (should be last step in workflow).
-             *   11. Build artifact.
-             *   12. Return artifact.
+             *   11. Stop stopwatch.
+             *   12. Build & return artifact.
              *   
              */
 
+            // Step 1. Start stopwatch.
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            // 1. Read in source code from demo file path & generate FileData.
-            FileData fileData = _fileProcessor.ReadInTestFileData(fileName);
-
-            // 2. Generate SyntaxTree with FileData.
+            // Step 2. Generate SyntaxTree with passed in FileData.
             var syntaxTree = CSharpSyntaxTree.ParseText(fileData.Content);
 
-            // 3. Generate CompilationUnit with SyntaxTree.
+            // Step 3. Generate CompilationUnit with SyntaxTree.
             var compilationUnit = CSharpCompilation.Create("ArtifactCompilation")
                 .AddSyntaxTrees(syntaxTree)
                 .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 
-            // 4. Generate SemanticModel with CompilationUnit & SyntaxTree.
+            // Step 4. Generate SemanticModel with CompilationUnit & SyntaxTree.
             var semanticModel = compilationUnit.GetSemanticModel(syntaxTree);
 
-            // 5. Use SyntaxTree & SemanticModel to generate NavTokens for the demo artifact.
+            // Step 5. Use SyntaxTree & SemanticModel to generate NavTokens for the artifact.
             var navTokens = _navTokenGenerator.GenerateNavTokens(semanticModel, syntaxTree);
 
-            // 6. Generate TokenTags.
+            // Step 6. Generate TokenTags.
             _tokenTagGenerator.GenerateTokenTags(navTokens);
 
-            // 7. Generate TokenCharts.
+            // Step 7. Generate TokenCharts.
             _tokenChartGenerator.GenerateTokenCharts(navTokens);
 
-            // 8. Add TokenCharts highlight indices for highlighting in the code viewer.
+            // Step 8. Add TokenCharts highlight indices for highlighting in the code viewer.
             _tokenChartWizard.AddHighlightValuesToNavTokenCharts(navTokens);
 
-            // 9. Add TokenCharts definitions & insights.
+            // Step 9. Add TokenCharts definitions & insights.
             _tokenChartWizard.AddFactsAndInsightsToNavTokenCharts(navTokens);
 
-            // 10. Add syntax highlighting for all NavTokens (should be last step in workflow).
+            // Step 10. Add syntax highlighting for all NavTokens (should be last step in workflow).
             _syntaxHighlighter.AddSyntaxHighlightingToNavTokens(navTokens);
 
             TokenLogger.LogTokenList(navTokens);
 
+            // Step 11. Stop stopwatch.
             stopwatch.Stop();
 
-            // 11. Build artifact.
-            var artifact = new Artifact(fileData.FileName, stopwatch.Elapsed, navTokens);
-
-            // 12. Return artifact.
-            return artifact;
-        }
-
-        public Artifact ExecGenerateArtifact(GenerateArtifactDto requestDto)
-        {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            // 1. Read in source code from demo file path & generate FileData.
-            FileData fileData = _fileProcessor.ReadInFileData(requestDto);
-
-            // 2. Generate SyntaxTree with FileData.
-            var syntaxTree = CSharpSyntaxTree.ParseText(fileData.Content);
-
-            // 3. Generate CompilationUnit with SyntaxTree.
-            var compilationUnit = CSharpCompilation.Create("ArtifactCompilation")
-                .AddSyntaxTrees(syntaxTree)
-                .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
-
-            // 4. Generate SemanticModel with CompilationUnit & SyntaxTree.
-            var semanticModel = compilationUnit.GetSemanticModel(syntaxTree);
-
-            // 5. Use SyntaxTree & SemanticModel to generate NavTokens for the demo artifact.
-            var navTokens = _navTokenGenerator.GenerateNavTokens(semanticModel, syntaxTree);
-
-            // 6. Generate TokenTags.
-            _tokenTagGenerator.GenerateTokenTags(navTokens);
-
-            // 7. Generate TokenCharts.
-            _tokenChartGenerator.GenerateTokenCharts(navTokens);
-
-            // 8. Add TokenCharts highlight indices for highlighting in the code viewer.
-            _tokenChartWizard.AddHighlightValuesToNavTokenCharts(navTokens);
-
-            // 9. Add TokenCharts definitions & insights.
-            _tokenChartWizard.AddFactsAndInsightsToNavTokenCharts(navTokens);
-
-            // 10. Add syntax highlighting for all NavTokens (should be last step in workflow).
-            _syntaxHighlighter.AddSyntaxHighlightingToNavTokens(navTokens);
-
-            TokenLogger.LogTokenList(navTokens);
-
-            stopwatch.Stop();
-
-            // 11. Build artifact.
-            var artifact = new Artifact(fileData.FileName, stopwatch.Elapsed, navTokens);
-
-            // 12. Return artifact.
-            return artifact;
+            // Step 12. Build & return artifact.
+            return new Artifact(fileData.FileName, stopwatch.Elapsed, navTokens);
         }
     }
 }

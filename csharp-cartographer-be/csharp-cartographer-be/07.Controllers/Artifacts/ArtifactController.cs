@@ -51,7 +51,7 @@ namespace csharp_cartographer_be._07.Controllers.Artifacts
         {
             try
             {
-                var artifact = _generateArtifactWorkflow.ExecGenerateArtifact(dto);
+                var artifact = _generateArtifactWorkflow.ExecGenerateUserArtifact(dto);
 
                 return Ok(artifact);
             }
