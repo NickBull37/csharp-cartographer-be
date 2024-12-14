@@ -9,6 +9,7 @@ using csharp_cartographer_be._05.Services.Tokens;
 using csharp_cartographer_be._07.Controllers.Artifacts.DtoModels;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Diagnostics;
 
 namespace csharp_cartographer_be._06.Workflows.Artifacts
 {
@@ -57,6 +58,8 @@ namespace csharp_cartographer_be._06.Workflows.Artifacts
              *   
              */
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             // 1. Read in source code from demo file path & generate FileData.
             FileData fileData = _fileProcessor.ReadInTestFileData(fileName);
 
@@ -91,14 +94,10 @@ namespace csharp_cartographer_be._06.Workflows.Artifacts
 
             TokenLogger.LogTokenList(navTokens);
 
+            stopwatch.Stop();
+
             // 11. Build artifact.
-            Artifact artifact = new()
-            {
-                CreatedDate = DateTime.Now,
-                ArtifactType = "Model Class",
-                Title = fileData.FileName,
-                NavTokens = navTokens,
-            };
+            var artifact = new Artifact(fileData.FileName, stopwatch.Elapsed, navTokens);
 
             // 12. Return artifact.
             return artifact;
@@ -106,6 +105,8 @@ namespace csharp_cartographer_be._06.Workflows.Artifacts
 
         public Artifact ExecGenerateArtifact(GenerateArtifactDto requestDto)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             // 1. Read in source code from demo file path & generate FileData.
             FileData fileData = _fileProcessor.ReadInFileData(requestDto);
 
@@ -140,14 +141,10 @@ namespace csharp_cartographer_be._06.Workflows.Artifacts
 
             TokenLogger.LogTokenList(navTokens);
 
+            stopwatch.Stop();
+
             // 11. Build artifact.
-            Artifact artifact = new()
-            {
-                CreatedDate = DateTime.Now,
-                ArtifactType = "Model Class",
-                Title = fileData.FileName,
-                NavTokens = navTokens,
-            };
+            var artifact = new Artifact(fileData.FileName, stopwatch.Elapsed, navTokens);
 
             // 12. Return artifact.
             return artifact;
