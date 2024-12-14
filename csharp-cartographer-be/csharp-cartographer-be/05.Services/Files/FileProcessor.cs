@@ -13,6 +13,7 @@ namespace csharp_cartographer_be._05.Services.Files
         private readonly string _helperClassDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\02.Utilities\Helpers\StringHelpers.cs";
         private readonly string _configDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\01.Configuration\CartographerConfig\CartographerConfig.cs";
         private readonly string _dtoDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\07.Controllers\Artifacts\DtoModels\GenerateArtifactDto.cs";
+        private readonly string _providerDemoFilePath = @"C:\Users\nbuli\source\repos\csharp-cartographer-be\csharp-cartographer-be\csharp-cartographer-be\08.Providers\ChatGpt\ChatGptProvider.cs";
 
         public FileData ReadInTestFileData(string fileName)
         {
@@ -26,6 +27,7 @@ namespace csharp_cartographer_be._05.Services.Files
                 "StringHelpers.cs" => _helperClassDemoFilePath,
                 "CartographerConfig.cs" => _configDemoFilePath,
                 "GenerateArtifactDto.cs" => _dtoDemoFilePath,
+                "ChatGptProvider.cs" => _providerDemoFilePath,
                 _ => string.Empty
             };
 

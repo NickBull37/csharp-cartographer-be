@@ -21,6 +21,14 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 token.Charts[2].Label == "SimpleBaseType";
         }
 
+        public static bool IsCatchDeclaration(NavToken token)
+        {
+            return token.Charts.Count > 2 &&
+                token.Charts[0].Label == "IdentifierToken" &&
+                token.Charts[1].Label == "IdentifierName" &&
+                token.Charts[2].Label == "CatchDeclaration";
+        }
+
         public static bool IsClassDeclaration(NavToken token)
         {
             return token.Charts.Count > 1 &&
@@ -147,6 +155,24 @@ namespace csharp_cartographer_be._02.Utilities.Charts
             return token.Charts.Count > 1 &&
                 token.Charts[0].Label == "IdentifierToken" &&
                 token.Charts[1].Label == "InterfaceDeclaration";
+        }
+
+        public static bool IsInterpolatedStringStart(NavToken token)
+        {
+            return token.Charts.Count > 0 &&
+                token.Charts[0].Label == "InterpolatedStringStartToken";
+        }
+
+        public static bool IsInterpolatedStringEnd(NavToken token)
+        {
+            return token.Charts.Count > 0 &&
+                token.Charts[0].Label == "InterpolatedStringEndToken";
+        }
+
+        public static bool IsInterpolatedStringText(NavToken token)
+        {
+            return token.Charts.Count > 0 &&
+                token.Charts[0].Label == "InterpolatedStringTextToken";
         }
 
         public static bool IsInvocation(NavToken token)
@@ -283,8 +309,6 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 token.Charts[2].Label == "VariableDeclaration" &&
                 token.Charts[3].Label == "LocalDeclarationStatement";
         }
-
-        // declaration pattern
 
         // member binding expression
         #endregion

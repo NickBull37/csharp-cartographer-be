@@ -272,6 +272,20 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                     token.HighlightColor = "color-green";
                     continue;
                 }
+
+                // catch declarations
+                if (ChartNavigator.IsCatchDeclaration(token))
+                {
+                    token.HighlightColor = "color-green";
+                    continue;
+                }
+
+                // interpolated strings
+                if (ChartNavigator.IsInterpolatedStringStart(token) || ChartNavigator.IsInterpolatedStringEnd(token) || ChartNavigator.IsInterpolatedStringText(token))
+                {
+                    token.HighlightColor = "color-orange";
+                    continue;
+                }
             }
         }
 
@@ -573,7 +587,8 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 if (nextToken != null
                     && ChartNavigator.IsMemberAccess(token)
                     && !ChartNavigator.IsInvocation(token)
-                    && nextToken.Text == ".")
+                    && nextToken.Text == "."
+                    && !token.Text.StartsWith('_'))
                 {
                     token.HighlightColor = "color-green";
                 }

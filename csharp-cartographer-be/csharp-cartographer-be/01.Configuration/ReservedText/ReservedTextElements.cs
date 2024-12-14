@@ -674,6 +674,16 @@
                 Text = "TokenType",
                 HighlightColor = _olive,
             },
+            new ReservedTextElement
+            {
+                Text = "IOptions",
+                HighlightColor = _olive,
+            },
+            new ReservedTextElement
+            {
+                Text = "CancellationToken",
+                HighlightColor = _jade,
+            },
         };
     }
 }
