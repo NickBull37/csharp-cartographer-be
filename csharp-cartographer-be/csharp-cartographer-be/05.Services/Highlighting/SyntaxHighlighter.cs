@@ -38,6 +38,11 @@ namespace csharp_cartographer_be._05.Services.Highlighting
         {
             foreach (var token in navTokens)
             {
+                if (HighlightColorAlreadySet(token))
+                {
+                    continue;
+                }
+
                 // default keyword can be blue or purple
                 if (token.Text == "default" && token.Tags[1].Label == "DefaultSwitchLabel")
                 {
@@ -64,6 +69,8 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 }
             }
         }
+
+        // factor out default logic
 
         private static void AddLiteralHighlighting(List<NavToken> navTokens)
         {
@@ -605,7 +612,7 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 }
 
                 // static class invocations
-                if (nextToken.Text == "." && token.SymbolKind != "Field")
+                if (nextToken.Text == "." && token.SemanticData?.SymbolKind != "Field")
                 {
                     token.HighlightColor = "color-green";
                 }

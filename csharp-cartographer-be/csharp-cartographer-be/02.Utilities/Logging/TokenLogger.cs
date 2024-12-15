@@ -79,26 +79,19 @@ namespace csharp_cartographer_be._02.Utilities.Logging
                     count++;
                 }
             }
-            LogMessage($"Value: {token.Value}");
             LogMessage(" ");
             LogMessage("------------------- Syntax data -------------------");
             LogMessage($"ParentNodeKind: {token.ParentNodeKind ?? "..."}");
-            LogMessage($"ParentNodeType: {token.ParentNodeType ?? "..."}");
-            LogMessage(" ");
             LogMessage($"GrandParentNodeKind: {token.GrandParentNodeKind ?? "..."}");
-            LogMessage($"GrandParentNodeType: {token.GrandParentNodeType ?? "..."}");
-            LogMessage(" ");
             LogMessage($"GreatGrandParentNodeKind: {token.GreatGrandParentNodeKind ?? "..."}");
-            LogMessage($"GreatGrandParentNodeType: {token.GreatGrandParentNodeType ?? "..."}");
-            LogMessage(" ");
             LogMessage("------------------- Semantic data -------------------");
-            LogMessage($"SymbolName: {token.SymbolName ?? "..."}");
-            LogMessage($"SymbolKind: {token.SymbolKind ?? "..."}");
-            LogMessage($"ContainingType: {token.ContainingType ?? "..."}");
-            LogMessage($"ContainingNamespace: {token.ContainingNamespace ?? "..."}");
-            LogMessage($"TypeName: {token.TypeName ?? "..."}");
-            LogMessage($"TypeKind: {token.TypeKind ?? "..."}");
-            LogMessage($"IsNullable: {token.IsNullable}");
+            LogMessage($"SymbolName: {token.SemanticData?.SymbolName ?? "..."}");
+            LogMessage($"SymbolKind: {token.SemanticData?.SymbolKind ?? "..."}");
+            LogMessage($"ContainingType: {token.SemanticData?.ContainingType ?? "..."}");
+            LogMessage($"ContainingNamespace: {token.SemanticData?.ContainingNamespace ?? "..."}");
+            LogMessage($"TypeName: {token.SemanticData?.TypeName ?? "..."}");
+            LogMessage($"TypeKind: {token.SemanticData?.TypeKind ?? "..."}");
+            LogMessage($"IsNullable: {token.SemanticData?.IsNullable.ToString() ?? "..."}");
             LogMessage(" ");
             //LogMessage("=================================================================");
         }
