@@ -44,19 +44,9 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 }
 
                 // default keyword can be blue or purple
-                if (token.Text == "default" && token.Tags[1].Label == "DefaultSwitchLabel")
+                if (token.Text == "default")
                 {
-                    token.HighlightColor = "color-purple";
-                    continue;
-                }
-                else if (token.Text == "default" && token.Tags[1].Label == "DefaultLiteralExpression")
-                {
-                    token.HighlightColor = "color-blue";
-                    continue;
-                }
-                else if (token.Text == "default")
-                {
-                    token.HighlightColor = "color-blue";
+                    token.HighlightColor = GetDefaultKeywordColor(token);
                     continue;
                 }
 
@@ -69,8 +59,6 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 }
             }
         }
-
-        // factor out default logic
 
         private static void AddLiteralHighlighting(List<NavToken> navTokens)
         {
@@ -85,13 +73,13 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 if (token.Kind == SyntaxKind.StringLiteralToken || token.Kind == SyntaxKind.CharacterLiteralToken)
                 {
                     token.HighlightColor = "color-orange";
+                    continue;
                 }
                 // numeric literals (integer, decimal, float)
-                if (token.Kind == SyntaxKind.NumericLiteralToken
-                    || token.Kind.ToString() == "DecimalLiteralToken"
-                    || token.Kind.ToString() == "FloatLiteralToken")
+                if (token.Kind == SyntaxKind.NumericLiteralToken)
                 {
                     token.HighlightColor = "color-light-green";
+                    continue;
                 }
             }
         }
@@ -288,7 +276,9 @@ namespace csharp_cartographer_be._05.Services.Highlighting
                 }
 
                 // interpolated strings
-                if (ChartNavigator.IsInterpolatedStringStart(token) || ChartNavigator.IsInterpolatedStringEnd(token) || ChartNavigator.IsInterpolatedStringText(token))
+                if (ChartNavigator.IsInterpolatedStringStart(token)
+                    || ChartNavigator.IsInterpolatedStringEnd(token)
+                    || ChartNavigator.IsInterpolatedStringText(token))
                 {
                     token.HighlightColor = "color-orange";
                     continue;
@@ -549,21 +539,23 @@ namespace csharp_cartographer_be._05.Services.Highlighting
 
         }
 
-        private static bool HighlightColorAlreadySet(NavToken token)
+        private static string GetDefaultKeywordColor(NavToken token)
         {
-            if (!string.IsNullOrEmpty(token.HighlightColor))
-            {
-                return true;
-            }
-            return false;
+            return token.Text == "default" && token.Tags[1].Label == "DefaultSwitchLabel"
+                ? "color-purple"
+                : "color-blue";
         }
 
-        // TODO: Move to helper, dupped in tokentag wizard
+        private static bool HighlightColorAlreadySet(NavToken token)
+        {
+            return !string.IsNullOrEmpty(token.HighlightColor);
+        }
+
         private static string GetClassOrInterfaceColor(string text)
         {
             if (string.IsNullOrEmpty(text) || text.Length < 2)
             {
-                return "color-red";
+                return "color-red"; // color red for unidentified tokens
             }
 
             if (char.IsUpper(text[0])
