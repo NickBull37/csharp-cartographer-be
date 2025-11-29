@@ -19,10 +19,14 @@ namespace csharp_cartographer_be._05.Services.Highlighting
 
         public void AddSyntaxHighlightingToNavTokens(List<NavToken> navTokens)
         {
-            AddReservedTextHighlighting(navTokens);
-            AddLiteralHighlighting(navTokens);
-            AddIdentifierHighlighting(navTokens);
-            AddIdentifierReferenceHighlighting(navTokens);
+            foreach (var token in navTokens)
+            {
+                AddReservedTextHighlighting(token);
+                AddLiteralHighlighting(token);
+                AddIdentifierHighlighting(token);
+                AddIdentifierReferenceHighlighting(token, navTokens);
+            }
+
             AddHighlightingThatNeedsSurroundingTokens(navTokens);
 
             if (_config.ShowUnhighlightedTokens)
@@ -31,217 +35,185 @@ namespace csharp_cartographer_be._05.Services.Highlighting
             }
         }
 
-        private static void AddReservedTextHighlighting(List<NavToken> navTokens)
+        private static void AddReservedTextHighlighting(NavToken token)
         {
-            foreach (var token in navTokens)
+            if (HighlightColorAlreadySet(token))
             {
-                if (HighlightColorAlreadySet(token))
-                {
-                    continue;
-                }
+                return;
+            }
 
-                // default keyword can be blue or purple
-                if (token.Text == "default")
-                {
-                    token.HighlightColor = GetDefaultKeywordColor(token);
-                    continue;
-                }
+            // default keyword can be blue or purple
+            if (token.Text == "default")
+            {
+                token.HighlightColor = GetDefaultKeywordColor(token);
+                return;
+            }
 
-                foreach (var element in ReservedTextElements.ElementList)
+            foreach (var element in ReservedTextElements.ElementList)
+            {
+                if (token.Text.Equals(element.Text))
                 {
-                    if (token.Text.Equals(element.Text))
-                    {
-                        token.HighlightColor = element.HighlightColor;
-                    }
+                    token.HighlightColor = element.HighlightColor;
                 }
             }
         }
 
-        private static void AddLiteralHighlighting(List<NavToken> navTokens)
+        private static void AddLiteralHighlighting(NavToken token)
         {
-            foreach (var token in navTokens)
+            if (HighlightColorAlreadySet(token))
             {
-                if (HighlightColorAlreadySet(token))
-                {
-                    continue;
-                }
+                return;
+            }
 
+            token.HighlightColor = token.Kind switch
+            {
                 // numeric literals (integer, decimal, float)
-                if (token.Kind == SyntaxKind.NumericLiteralToken)
-                {
-                    token.HighlightColor = "color-light-green";
-                    continue;
-                }
-                // string & char literals
-                if (token.Kind == SyntaxKind.StringLiteralToken
-                    || token.Kind == SyntaxKind.CharacterLiteralToken)
-                {
-                    token.HighlightColor = "color-orange";
-                    continue;
-                }
+                SyntaxKind.NumericLiteralToken => "color-light-green",
+
+                // string and char literals
+                SyntaxKind.StringLiteralToken or SyntaxKind.CharacterLiteralToken => "color-orange",
+
                 // interpolated strings
-                if (ChartNavigator.IsInterpolatedStringStart(token)
+                _ when ChartNavigator.IsInterpolatedStringStart(token)
                     || ChartNavigator.IsInterpolatedStringEnd(token)
-                    || ChartNavigator.IsInterpolatedStringText(token))
-                {
-                    token.HighlightColor = "color-orange";
-                    continue;
-                }
+                    || ChartNavigator.IsInterpolatedStringText(token) => "color-orange",
+
+                // no color assignment
+                _ => token.HighlightColor
+            };
+        }
+
+        private static void AddIdentifierHighlighting(NavToken token)
+        {
+            if (HighlightColorAlreadySet(token))
+            {
+                return;
+            }
+
+            // interface delclaration identifier
+            if (ChartNavigator.IsInterfaceDeclaration(token))
+            {
+                token.HighlightColor = "color-light-green";
+                return;
+            }
+
+            // namespace delclaration identifier
+            // using directive identifier
+            // field identifier
+            // property
+            // property access
+            if (ChartNavigator.IsNamespaceDeclaration(token)
+                || ChartNavigator.IsUsingDirective(token)
+                || ChartNavigator.IsField(token)
+                || ChartNavigator.IsProperty(token)
+                || ChartNavigator.IsPropertyAccess(token))
+            {
+                token.HighlightColor = "color-white";
+                return;
+            }
+
+            // constructor declaration identifier
+            // class delclaration identifier
+            // exceptions
+            // declaration pattern
+            // object creation identifiers
+            // record declaration
+            // catch declarations
+            if (ChartNavigator.IsConstructorDeclarationIdentifier(token)
+                || ChartNavigator.IsClassDeclaration(token)
+                || ChartNavigator.IsException(token)
+                || ChartNavigator.IsDeclarationPattern(token)
+                || ChartNavigator.IsObjectCreationIdentifier(token)
+                || ChartNavigator.IsRecordDeclaration(token)
+                || ChartNavigator.IsCatchDeclaration(token))
+            {
+                token.HighlightColor = "color-green";
+                return;
+            }
+
+            // method delclarations
+            // expressions
+            if (ChartNavigator.IsMethodDeclaration(token)
+                || ChartNavigator.IsExpression(token))
+            {
+                token.HighlightColor = "color-yellow";
+                return;
+            }
+
+            // variable delclarations
+            // parameter identifier
+            // exception identifiers
+            // name colons
+            // single var designations
+            // for loop identifier
+            // foreach variable
+            if (ChartNavigator.IsVariableDeclaration(token)
+                || ChartNavigator.IsParameter(token)
+                || ChartNavigator.IsExceptionIdentifier(token)
+                || ChartNavigator.IsNameColon(token)
+                || ChartNavigator.IsSingleVarDesignation(token)
+                || ChartNavigator.IsForLoopIdentifier(token)
+                || ChartNavigator.IsForEachVariable(token))
+            {
+                token.HighlightColor = "color-light-blue";
+                return;
+            }
+
+            // parameter type identifier
+            // type argument identifiers
+            // base types
+            // data types
+            // attributes
+            if (ChartNavigator.IsParameterType(token)
+                || ChartNavigator.IsTypeArgument(token)
+                || ChartNavigator.IsBaseType(token)
+                || ChartNavigator.IsDataType(token)
+                || ChartNavigator.IsAttribute(token))
+            {
+                token.HighlightColor = GetClassOrInterfaceColor(token.Text);
+                return;
             }
         }
 
-        private static void AddIdentifierHighlighting(List<NavToken> navTokens)
+        private static void AddIdentifierReferenceHighlighting(NavToken token, List<NavToken> navTokens)
         {
-            foreach (var token in navTokens)
+            switch (token)
             {
-                if (HighlightColorAlreadySet(token))
-                {
-                    continue;
-                }
-
-                // interface delclaration identifier
-                if (ChartNavigator.IsInterfaceDeclaration(token))
-                {
-                    token.HighlightColor = "color-light-green";
-                    continue;
-                }
-
-                // namespace delclaration identifier
-                // using directive identifier
-                // field identifier
-                // property
-                // property access
-                if (ChartNavigator.IsNamespaceDeclaration(token)
-                    || ChartNavigator.IsUsingDirective(token)
-                    || ChartNavigator.IsField(token)
-                    || ChartNavigator.IsProperty(token)
-                    || ChartNavigator.IsPropertyAccess(token))
-                {
-                    token.HighlightColor = "color-white";
-                    continue;
-                }
-
-                // constructor declaration identifier
-                // class delclaration identifier
-                // exceptions
-                // declaration pattern
-                // object creation identifiers
-                // record declaration
-                // catch declarations
-                if (ChartNavigator.IsConstructorDeclaration(token)
-                    || ChartNavigator.IsClassDeclaration(token)
-                    || ChartNavigator.IsException(token)
-                    || ChartNavigator.IsDeclarationPattern(token)
-                    || ChartNavigator.IsObjectCreationIdentifier(token)
-                    || ChartNavigator.IsRecordDeclaration(token)
-                    || ChartNavigator.IsCatchDeclaration(token))
-                {
-                    token.HighlightColor = "color-green";
-                    continue;
-                }
-
-                // method delclarations
-                // expressions
-                if (ChartNavigator.IsMethodDeclaration(token)
-                    || ChartNavigator.IsExpression(token))
-                {
-                    token.HighlightColor = "color-yellow";
-                    continue;
-                }
-
-                // variable delclarations
-                // parameter identifier
-                // exception identifiers
-                // name colons
-                // single var designations
-                // for loop identifier
-                if (ChartNavigator.IsVariableDeclaration(token)
-                    || ChartNavigator.IsParameter(token)
-                    || ChartNavigator.IsExceptionIdentifier(token)
-                    || ChartNavigator.IsNameColon(token)
-                    || ChartNavigator.IsSingleVarDesignation(token)
-                    || ChartNavigator.IsForLoopIdentifier(token))
-                {
-                    token.HighlightColor = "color-light-blue";
-                    continue;
-                }
-
-                // parameter type identifier
-                // type argument identifiers
-                // base types
-                // data types
-                // attributes
-                if (ChartNavigator.IsParameterType(token)
-                    || ChartNavigator.IsTypeArgument(token)
-                    || ChartNavigator.IsBaseType(token)
-                    || ChartNavigator.IsDataType(token)
-                    || ChartNavigator.IsAttribute(token))
-                {
-                    token.HighlightColor = GetClassOrInterfaceColor(token.Text);
-                    continue;
-                }
-            }
-        }
-
-        private static void AddIdentifierReferenceHighlighting(List<NavToken> navTokens)
-        {
-            foreach (var token in navTokens)
-            {
-                // parameter refs
-                if (ChartNavigator.IsParameter(token))
-                {
+                case var _ when ChartNavigator.IsParameter(token):
                     UpdateParameterIdentifierReferences(navTokens, token.Index);
-                }
-
-                // variable refs
-                if (ChartNavigator.IsVariableDeclaration(token))
-                {
+                    break;
+                case var _ when ChartNavigator.IsVariableDeclaration(token):
+                case var _ when ChartNavigator.IsSingleVarDesignation(token):
                     UpdateRefsInContainingBlock(navTokens, token.Text, token.Index, "color-light-blue");
-                }
-
-                // foreach var refs
-                if (ChartNavigator.IsForEachVariable(token))
-                {
-                    token.HighlightColor = "color-light-blue";
+                    break;
+                case var _ when ChartNavigator.IsForEachVariable(token):
+                case var _ when ChartNavigator.IsExceptionIdentifier(token):
                     UpdateRefsInNextBlock(navTokens, token.Text, token.Index, "color-light-blue");
-                }
-
-                // exception identifier refs
-                if (ChartNavigator.IsExceptionIdentifier(token))
-                {
-                    UpdateRefsInNextBlock(navTokens, token.Text, token.Index, "color-light-blue");
-                }
-
-                // single var designation refs
-                if (ChartNavigator.IsSingleVarDesignation(token))
-                {
-                    UpdateRefsInContainingBlock(navTokens, token.Text, token.Index, "color-light-blue");
-                }
-
-                // for loop identifier refs
-                if (ChartNavigator.IsForLoopIdentifier(token))
-                {
+                    break;
+                case var _ when ChartNavigator.IsForLoopIdentifier(token):
                     UpdateForLoopIdentifierReferences(navTokens, token.Index);
-                }
+                    break;
+                default:
+                    break;
             }
         }
 
         private static void UpdateParameterIdentifierReferences(List<NavToken> tokens, int startIndex)
         {
             var parameterName = tokens[startIndex].Text;
-            var bodyType = GetBodyStructure(tokens, startIndex);
+            var bodyStructure = GetBodyStructure(tokens, startIndex);
 
-            if (bodyType == BodyStructure.NoBody)  // interface
+            switch (bodyStructure)
             {
-                return;
-            }
-            if (bodyType == BodyStructure.BlockBody)
-            {
-                UpdateRefsInNextBlock(tokens, parameterName, startIndex, "color-light-blue");
-            }
-            else if (bodyType == BodyStructure.ExpressionBody)
-            {
-                UpdateRefsInExpressionBody(tokens, parameterName, startIndex, "color-light-blue");
+                case BodyStructure.BlockBody:
+                    UpdateRefsInNextBlock(tokens, parameterName, startIndex, "color-light-blue");
+                    break;
+                case BodyStructure.ExpressionBody:
+                    UpdateRefsInExpressionBody(tokens, parameterName, startIndex, "color-light-blue");
+                    break;
+                case BodyStructure.NoBody:  // interface
+                default:
+                    break;
             }
         }
 
@@ -356,7 +328,7 @@ namespace csharp_cartographer_be._05.Services.Highlighting
         }
 
         private static string GetDefaultKeywordColor(NavToken token) =>
-            token.Text == "default" && token.Tags[1].Label == "DefaultSwitchLabel"
+            token.Text == "default" && token.Charts[1].Label == "DefaultSwitchLabel"
                 ? "color-purple"
                 : "color-blue";
 

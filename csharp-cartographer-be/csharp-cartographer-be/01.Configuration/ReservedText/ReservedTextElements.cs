@@ -251,6 +251,11 @@
             },
             new ReservedTextElement
             {
+                Text = "or",
+                HighlightColor = _blue,
+            },
+            new ReservedTextElement
+            {
                 Text = "out",
                 HighlightColor = _blue,
             },
@@ -401,6 +406,11 @@
             },
             new ReservedTextElement
             {
+                Text = "when",
+                HighlightColor = _purple,
+            },
+            new ReservedTextElement
+            {
                 Text = "while",
                 HighlightColor = _purple,
             },
@@ -503,6 +513,11 @@
             {
                 Text = "!",
                 HighlightColor = _gray,
+            },
+            new ReservedTextElement
+            {
+                Text = "_",
+                HighlightColor = _blue,
             },
 
             /// ****************************************************

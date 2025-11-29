@@ -35,8 +35,8 @@ namespace csharp_cartographer_be._02.Utilities.Charts
                 token.Charts[0].Label == "IdentifierToken" &&
                 token.Charts[1].Label == "ClassDeclaration";
         }
-
-        public static bool IsConstructorDeclaration(NavToken token)
+        // TODO: Update all to identifier where needed
+        public static bool IsConstructorDeclarationIdentifier(NavToken token)
         {
             return token.Charts.Count > 1 &&
                 token.Charts[0].Label == "IdentifierToken" &&
